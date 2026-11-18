@@ -64,12 +64,12 @@ A consuming project's areas add the `llm-wiki/` layer derived from `wiki/`. That
 
 ## Documented areas
 
-| Area                      | Contents                                                   | Status |
-| ------------------------- | ---------------------------------------------------------- | ------ |
-| `foundations/`            | What it is, principles, differentiators vs other methods   | Draft  |
-| `pipeline/`               | How a documentation task is validated before code exists    | Draft  |
-| `agents/`                | The routing model: manager skill and domain registry        | Draft  |
-| `document-architecture/` | Wiki + llm-wiki, conventions, maintenance                  | Draft  |
+| Area                      | Contents                                                   |
+| ------------------------- | ---------------------------------------------------------- |
+| `foundations/`            | What it is, principles, differentiators vs other methods   |
+| `pipeline/`               | How a documentation task is validated before code exists   |
+| `agents/`                 | The routing model: manager skill and domain registry       |
+| `document-architecture/`  | Wiki + llm-wiki, conventions, maintenance                  |
 
 > New areas will be added as the method evolves. Update this table when creating a new area.
 
