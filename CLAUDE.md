@@ -12,6 +12,8 @@ This repository documents the **Living Brain**, a software development method ce
 
 The rule is: **files → English only; responses → user's language.**
 
+**One registered exception:** `docs/` holds the project's public website, served by GitHub Pages, and is written in Brazilian Portuguese because its audience is Portuguese-speaking evaluators. Code and comments inside it stay in English. The exception covers `docs/` and nothing else.
+
 ---
 
 ## Important - evolving structure
@@ -24,11 +26,12 @@ Pages marked with `> ⚠️ DRAFT` are awaiting human review. Do not treat that 
 
 ## What this repository contains
 
-Two parts, and no application source code - everything here is documentation.
+Three parts, and no application source code - everything here is documentation.
 
 | Directory         | Contents                                                                                                       |
 |-------------------| -------------------------------------------------------------------------------------------------------------- |
 | `framework/`      | Definition of the Living Brain method: foundations, pipeline, agents, document architecture                     |
+| `docs/`           | The public website (GitHub Pages), in Brazilian Portuguese - see the language exception above |
 | `plugins/living-brain/` | The Living Brain plugin: one thin routing skill (`manager`) plus a reference layer (`reference/ROLES.md`, `entry-templates.md`, `area-templates.md`, `writing-principles.md`, `documentation-architecture.md`, `llm-wiki-prompt.md`). Distributed via the marketplace at `.claude-plugin/marketplace.json`; loads as `living-brain:manager`. For in-repo development load with `claude --plugin-dir ./plugins/living-brain` |
 
 ---
@@ -81,4 +84,4 @@ A consuming project's areas add the `llm-wiki/` layer derived from `wiki/`. That
 2. **Mark drafts** - content not reviewed by the author carries the `> ⚠️ DRAFT` banner
 3. **Record changes** - every change in `wiki/` goes into `<area>/wiki/_changes.md`
 4. **Incremental** - do not create structures for content that does not yet exist
-5. **English only** - all written content must be in American English
+5. **English only** - all written content must be in American English, with the exception registered above
