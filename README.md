@@ -8,6 +8,8 @@ and every new piece of documentation is checked against what the product has alr
 > run in the regular Claude chat on claude.ai, in the Claude desktop or mobile chat apps, or in a
 > Claude Project.
 
+**Website (in Portuguese):** https://davidcromianski-dev.github.io/living-brain/
+
 ---
 
 ## The problem it addresses
