@@ -60,7 +60,7 @@ gets the plugin on clone:
       "source": {
         "source": "github",
         "repo": "davidcromianski-dev/living-brain",
-        "ref": "v0.1.0"
+        "ref": "v0.1.1"
       }
     }
   },
@@ -73,7 +73,7 @@ gets the plugin on clone:
 Notes:
 - `enabledPlugins` is an object whose keys use the format `<plugin-name>@<marketplace-name>`.
 - `ref` is the **pin**: a branch or tag, never a commit `sha`. Pinning to a release tag such as
-  `v0.1.0` keeps the whole team on the same version until you bump it. Use `master` instead to
+  `v0.1.1` keeps the whole team on the same version until you bump it. Use `master` instead to
   track the latest commit.
 - If your project already has a `.claude/settings.json`, merge these keys into it rather than
   overwriting the file.
