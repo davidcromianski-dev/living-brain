@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "living-brain",
+  "owner": {
+    "name": "David Cromianski",
+    "url": "https://github.com/davidcromianski-dev"
+  },
+  "description": "Claude Code marketplace for the Living Brain method: a routing skill plus reference layer for projects that adopt the living-documentation architecture. Works in Claude Code only.",
+  "plugins": [
+    {
+      "name": "living-brain",
+      "source": "./plugins/living-brain",
+      "description": "Living Brain routing skill (manager) plus reference layer (ROLES registry, entry templates, writing principles) for the wiki + llm-wiki documentation architecture. Claude Code only.",
+      "category": "documentation",
+      "keywords": ["living-brain", "documentation", "wiki", "llm-wiki", "claude-code"]
+    }
+  ]
+}
