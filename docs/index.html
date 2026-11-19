@@ -1011,8 +1011,9 @@ html.gesture .card.front .body{min-height:92px}
     start((i + 1) % demos.length);
   }
   function start(i){ token.cancel = true; token = { cancel:false }; run(i, token); }
-  box.addEventListener("pointerenter", function(){ hovered = true; });
+  box.addEventListener("pointerenter", function(e){ if (e.pointerType === "mouse") hovered = true; });
   box.addEventListener("pointerleave", function(){ hovered = false; });
+  box.addEventListener("pointercancel", function(){ hovered = false; });
   layout();
   var lw = graph.clientWidth;
   addEventListener("resize", function(){ if (graph.clientWidth !== lw){ lw = graph.clientWidth; layout(); } }, { passive:true });
@@ -1020,7 +1021,7 @@ html.gesture .card.front .body{min-height:92px}
   finalState(demos[0]);
   if ("IntersectionObserver" in window){
     var first = true;
-    new IntersectionObserver(function(es){ visible = es[0].isIntersecting; if (visible && first){ first = false; start(0); } }, { threshold:.35 }).observe(box);
+    new IntersectionObserver(function(es){ visible = es[0].intersectionRatio > 0; if (es[0].intersectionRatio >= .15 && first){ first = false; start(0); } }, { threshold:[0, .15] }).observe(box);
   } else { visible = true; start(0); }
 
   /* S6 real case: plays once when it scrolls into view; fully visible if scripts fail */
@@ -1113,8 +1114,9 @@ html.gesture .card.front .body{min-height:92px}
     next.addEventListener("click", function(){ hold(); go(1); });
     track.addEventListener("scroll", function(){ requestAnimationFrame(function(){ markDot(); shape(); }); }, { passive:true });
     track.addEventListener("click", function(e){ var c = e.target.closest(".track > *"); if (!c || c.classList.contains("focus") || e.target.closest("button, a")) return; hold(); track.scrollTo({ left:shown().indexOf(c) * step(), behavior:"smooth" }); });
-    track.addEventListener("pointerenter", function(){ pausedUntil = Infinity; });
-    track.addEventListener("pointerleave", function(){ pausedUntil = Date.now() + 2000; });
+    track.addEventListener("pointerenter", function(e){ if (e.pointerType === "mouse") pausedUntil = Infinity; });
+    track.addEventListener("pointerleave", function(e){ if (e.pointerType === "mouse") pausedUntil = Date.now() + 2000; });
+    track.addEventListener("touchstart", hold, { passive:true });
     track.addEventListener("focusin", hold);
     if ("IntersectionObserver" in window) new IntersectionObserver(function(es){ visible = es[0].isIntersecting; }, { threshold:.3 }).observe(track);
     setInterval(function(){ if (visible && !calm() && !document.hidden && Date.now() > pausedUntil && track.scrollWidth > track.clientWidth + 4) go(1); }, 4200);
