@@ -100,7 +100,7 @@ html[data-pattern="none"] :is(.pattern,.pattern-spot){display:none}
 .btn:hover .arr{transform:translateX(3px)}
 
 /* nav */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;padding-block:12px}
+.nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;padding-block:12px;padding-inline:max(8px,env(safe-area-inset-left,0px)) max(8px,env(safe-area-inset-right,0px))}
 .nav-in{display:flex;align-items:center;gap:16px;max-width:1080px;margin:0 auto;padding:8px 8px 8px 18px;border:1px solid transparent;border-radius:999px;transition:background .3s,border-color .3s,box-shadow .3s}
 .scrolled .nav-in{background:color-mix(in srgb,var(--bg) 72%,transparent);border-color:var(--line);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-shadow:0 8px 30px -18px rgba(0,0,0,.35)}
 .brand{display:flex;align-items:center;gap:10px;font:800 1.12rem var(--f-display);text-decoration:none;white-space:nowrap}
@@ -115,7 +115,7 @@ html[data-pattern="none"] :is(.pattern,.pattern-spot){display:none}
 }
 
 /* hero */
-.hero{position:relative;padding-block:clamp(56px,9vw,110px) 40px;overflow:hidden}
+.hero{position:relative;padding-block:calc(72px + clamp(40px,7vw,90px)) 40px;overflow:hidden}
 .hero .wrap{position:relative;z-index:1}
 .pill{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 8px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:.9rem;color:var(--muted)}
 .pill b{display:inline-grid;place-items:center;padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font:600 .72rem var(--f-mono);letter-spacing:.06em}
@@ -382,7 +382,26 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));translate:-50% 20px;padding:10px 18px;border-radius:999px;background:var(--ink);color:var(--bg);font-size:.9rem;opacity:0;pointer-events:none;transition:all .3s var(--ease);z-index:90}
 .toast.show{opacity:1;translate:-50% 0}
 
+
+/* one section per gesture (desktop): each section fills the screen; the hero shares its screen with the marquee */
+html.gesture{scroll-behavior:auto}
+html.gesture .hero{min-height:calc(100svh - var(--mqh,63px));display:grid;align-content:center;padding-block:76px 8px}
+html.gesture main>.sec{min-height:100svh;display:grid;align-content:center;padding-block:96px 72px}
+html.gesture h1{font-size:clamp(2.4rem,5.4vw,4.2rem);margin-top:20px}
+html.gesture .stage{height:170px;margin-top:12px}
+
+/* section dots */
+.dotnav{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));top:50%;translate:0 -50%;z-index:55;display:grid;gap:12px}
+.dotnav a{position:relative;display:block;width:10px;height:10px;border-radius:50%;background:var(--faint);transition:background .3s,transform .3s var(--ease)}
+.dotnav a:hover{transform:scale(1.4)}
+.dotnav a[aria-current="true"]{background:var(--accent);transform:scale(1.3)}
+.dotnav a span{position:absolute;right:20px;top:50%;translate:0 -50%;white-space:nowrap;padding:5px 10px;border-radius:8px;background:var(--ink);color:var(--bg);font:500 .78rem var(--f-body);opacity:0;pointer-events:none;transition:opacity .2s}
+.dotnav a:hover span,.dotnav a:focus-visible span{opacity:1}
+.night-on .dotnav a:not([aria-current="true"]){background:var(--night-line)}
+.night-on .dotnav a[aria-current="true"]{background:var(--night-acc)}
+
 @media (max-width:860px){
+  .dotnav{display:none}
   .links{display:none}
   .nav .btn.gh{display:none}
   .nav-in{justify-content:space-between}
@@ -679,6 +698,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
 
 <footer><div class="wrap"><span>Living Brain v0.1.1. Código aberto sob a <a href="https://github.com/davidcromianski-dev/living-brain/blob/master/LICENSE">licença MIT</a>.</span><span>Criado por <a href="https://github.com/davidcromianski-dev">David Cromianski</a>. <a href="https://github.com/davidcromianski-dev/living-brain">Ver no GitHub</a></span></div></footer>
 
+<nav class="dotnav" id="dotnav" aria-label="Seções da página"></nav>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -918,6 +939,87 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
     p.then(function(){ say("Copiado"); b.textContent = "Copiado"; setTimeout(function(){ b.textContent = b.dataset.copy === "json" ? "Copiar JSON" : "Copiar"; }, 1500); },
            function(){ say("Não deu para copiar. Selecione o texto e copie manualmente."); });
   });
+
+  /* sections: dot navigation, one section per gesture on desktop, and a small overshoot on arrival */
+  var secs = [$("#hero")].concat($$("main > .sec"));
+  var names = { hero:"Início", problema:"O problema", demo:"Na prática", como:"Como funciona", exemplo:"Exemplo real", relatos:"Relatos", diferencas:"O que muda", pedidos:"Pedidos", instalar:"Instalar", duvidas:"Dúvidas" };
+  var dotnav = $("#dotnav");
+  secs.forEach(function(sec){ var a = el("a", null, "<span>" + esc(names[sec.id] || sec.id) + "</span>"); a.href = "#" + sec.id; a.setAttribute("aria-label", names[sec.id] || sec.id); dotnav.appendChild(a); });
+  var navDots = $$("a", dotnav), activeSec = -1;
+  function secTop(i){ return i === 0 ? 0 : secs[i].getBoundingClientRect().top + scrollY; }
+  function currentSec(){ var mid = innerHeight * .4, idx = 0; secs.forEach(function(sc, i){ if (sc.getBoundingClientRect().top <= mid) idx = i; }); return idx; }
+  function markSec(){
+    var i = currentSec(); if (i === activeSec) return; activeSec = i;
+    navDots.forEach(function(d, j){ d.setAttribute("aria-current", j === i ? "true" : "false"); });
+    document.body.classList.toggle("night-on", secs[i].classList.contains("night"));
+    if (gesture) try { history.replaceState(null, "", i === 0 ? location.pathname : "#" + secs[i].id); } catch(e){}
+  }
+  addEventListener("scroll", function(){ requestAnimationFrame(markSec); }, { passive:true });
+
+  var gestureMQ = matchMedia("(hover: hover) and (pointer: fine) and (min-width: 861px)");
+  var gesture = false, moving = false, lastWheel = 0, anim = 0;
+  function setGesture(){ gesture = gestureMQ.matches && !calm(); root.classList.toggle("gesture", gesture); var mq = $(".marquee"); if (mq) root.style.setProperty("--mqh", mq.offsetHeight + "px"); activeSec = -1; markSec(); }
+  if (gestureMQ.addEventListener) gestureMQ.addEventListener("change", setGesture);
+  setGesture();
+
+  /* travel past the target by a few pixels, then settle back on it */
+  function glide(to){
+    cancelAnimationFrame(anim);
+    var from = scrollY, max = document.documentElement.scrollHeight - innerHeight;
+    to = Math.max(0, Math.min(max, to));
+    var dist = to - from, dir = dist > 0 ? 1 : -1;
+    var over = Math.min(26, Math.abs(dist) * .04) * dir;
+    if (to + over < 0 || to + over > max) over = 0;
+    var t1 = 620, t2 = 380, t0 = performance.now();
+    moving = true;
+    function ease(t){ return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+    function out(t){ return 1 - Math.pow(1 - t, 3); }
+    (function frame(now){
+      var e = now - t0, y;
+      if (e < t1) y = from + (dist + over) * ease(e / t1);
+      else if (e < t1 + t2) y = to + over * (1 - out((e - t1) / t2));
+      else y = to;
+      scrollTo(0, y);
+      if (e < t1 + t2) anim = requestAnimationFrame(frame);
+      else setTimeout(function(){ moving = false; }, 120);
+    })(t0);
+  }
+  function goSec(i){ if (i >= 0 && i < secs.length) glide(secTop(i)); }
+
+  /* returns true when the gesture was handled here */
+  function stepSec(dir, fresh){
+    var i = currentSec(), r = secs[i].getBoundingClientRect();
+    if (dir > 0 && i === secs.length - 1) return false;              /* past the last section: footer scrolls normally */
+    if (dir < 0 && i === 0 && scrollY <= 1) return false;
+    if (dir > 0 && r.bottom > innerHeight + 4) return false;           /* tall section: read it to the end first */
+    if (dir < 0 && r.top < -4) return false;
+    if (moving || !fresh) return true;                                  /* swallow the rest of the gesture and trackpad inertia */
+    goSec(i + dir);
+    return true;
+  }
+  addEventListener("wheel", function(e){
+    if (!gesture || e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX) || e.target.closest(".track")) return;
+    var now = performance.now(), fresh = now - lastWheel > 180; lastWheel = now;
+    if (moving) { e.preventDefault(); return; }
+    if (Math.abs(e.deltaY) < 2) return;
+    if (stepSec(e.deltaY > 0 ? 1 : -1, fresh)) e.preventDefault();
+  }, { passive:false });
+  addEventListener("keydown", function(e){
+    if (!gesture || e.altKey || e.ctrlKey || e.metaKey || e.target.closest("input, textarea, select, button, summary, [contenteditable], .track")) return;
+    var k = e.key, dir = (k === "PageDown" || k === "ArrowDown" || (k === " " && !e.shiftKey)) ? 1 : (k === "PageUp" || k === "ArrowUp" || (k === " " && e.shiftKey)) ? -1 : 0;
+    if (!dir) return;
+    if (moving) { e.preventDefault(); return; }
+    if (stepSec(dir, true)) e.preventDefault();
+  });
+  document.addEventListener("click", function(e){
+    if (!gesture) return;
+    var a = e.target.closest('a[href^="#"]'); if (!a) return;
+    var id = a.getAttribute("href").slice(1), i = id === "topo" ? 0 : secs.findIndex(function(sc){ return sc.id === id; });
+    if (i < 0) return;
+    e.preventDefault(); goSec(i);
+  });
+  markSec();
+
   /* repository numbers badge. Clones come from traffic.json, saved daily by
      .github/workflows/traffic-stats.yml; stars and open issues come live from the public GitHub API.
      Each item shows only when its number loads; the badge stays hidden if none does. */
