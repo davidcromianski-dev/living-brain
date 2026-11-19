@@ -1,0 +1,109 @@
+{
+  "repository": "davidcromianski-dev/living-brain",
+  "updated_at": "2026-11-19T17:59:02.286Z",
+  "summary": {
+    "since": "2026-11-05",
+    "clones": 42,
+    "views": 27,
+    "stars": 1,
+    "forks": 0
+  },
+  "daily": {
+    "2026-11-05": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-06": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-07": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-08": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-09": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-10": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-11": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-12": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-13": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-14": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-15": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-16": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-17": {
+      "clones": 0,
+      "unique_cloners": 0,
+      "views": 0,
+      "unique_visitors": 0
+    },
+    "2026-11-18": {
+      "clones": 42,
+      "unique_cloners": 21,
+      "views": 27,
+      "unique_visitors": 1
+    }
+  },
+  "snapshots": [
+    {
+      "date": "2026-11-19",
+      "window_days": 14,
+      "clones": 42,
+      "unique_cloners": 21,
+      "views": 27,
+      "unique_visitors": 1,
+      "stars": 1,
+      "forks": 0
+    }
+  ]
+}
