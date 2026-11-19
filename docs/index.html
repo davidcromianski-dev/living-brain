@@ -439,6 +439,12 @@ pre.json{margin:0;padding:6px 12px;font:400 .82rem/1.6 var(--f-mono);overflow-x:
 .faq{max-width:760px;margin:0 auto;display:grid;gap:10px}
 .contact{max-width:760px;margin:clamp(56px,8vw,84px) auto 0;padding:clamp(28px,5vw,44px);border-radius:24px;border:1px solid var(--line);background:var(--surface);text-align:center;display:grid;justify-items:center;gap:14px;overflow:hidden}
 .contact .ctas{margin-top:8px}
+.social{display:grid;justify-items:center;gap:12px;width:100%;margin-top:14px;padding-top:22px;border-top:1px solid var(--line)}
+.social-k{font:600 .72rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.social-links{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.social-a{display:inline-flex;align-items:center;gap:9px;padding:9px 15px 9px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);text-decoration:none;font-size:.92rem;transition:border-color .25s,color .25s,transform .25s var(--ease),box-shadow .25s}
+.social-a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);box-shadow:0 10px 24px -14px color-mix(in srgb,var(--accent) 70%,transparent)}
+.social-a svg{flex:none}
 footer{border-top:1px solid var(--line);padding-block:28px 40px;color:var(--muted);font-size:.88rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
 
@@ -764,6 +770,13 @@ html.gesture .card.front .body{min-height:92px}
       <h3 style="font-size:clamp(1.5rem,3vw,2rem)">Ficou com alguma dúvida?</h3>
       <p class="lead">Abra no GitHub. A resposta fica pública e ajuda quem tiver a mesma pergunta depois. Os botões abrem um modelo já preenchido.</p>
       <div class="ctas"><a class="btn primary" href="https://github.com/davidcromianski-dev/living-brain/issues/new?title=D%C3%BAvida%3A%20&amp;body=%2A%2AO%20que%20voc%C3%AA%20quer%20saber%3F%2A%2A%0A%0A%0A%2A%2AO%20que%20voc%C3%AA%20j%C3%A1%20tentou%3F%2A%2A%0A%0A%0A%2A%2AOnde%20voc%C3%AA%20usa%20o%20Claude%20Code%3F%2A%2A%20%28terminal%2C%20app%20desktop%2C%20IDE%20ou%20claude.ai%2Fcode%29%0A"><span>Enviar uma dúvida</span></a><a class="btn" href="https://github.com/davidcromianski-dev/living-brain/issues/new?title=Problema%3A%20&amp;body=%2A%2AO%20que%20aconteceu%3F%2A%2A%0A%0A%0A%2A%2AO%20que%20voc%C3%AA%20esperava%3F%2A%2A%0A%0A%0A%2A%2APassos%20para%20reproduzir%2A%2A%0A1.%20%0A2.%20%0A%0A%2A%2AVers%C3%A3o%20do%20plugin%2A%2A%20%28veja%20em%20%2Fplugin%29%0A%0A"><span>Reportar um problema</span></a></div>
+      <div class="social">
+        <span class="social-k">Ou fale direto comigo</span>
+        <div class="social-links">
+          <a class="social-a" href="https://github.com/davidcromianski-dev" rel="me"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg><span>davidcromianski-dev</span></a>
+          <a class="social-a" href="https://www.instagram.com/david.gcr/" rel="me"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg><span>@david.gcr</span></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
