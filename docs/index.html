@@ -313,6 +313,7 @@ details.acc[open]::details-content{block-size:auto}
 .track{display:grid;grid-auto-flow:column;grid-auto-columns:min(360px,84%);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:max(16px,calc(50% - 540px));padding:8px max(16px,calc(50% - 540px)) 24px;scrollbar-width:none;cursor:grab}
 .track::-webkit-scrollbar{display:none}
 .track.drag{cursor:grabbing;scroll-snap-type:none}
+.track.fit{justify-content:center;cursor:auto}
 .track.drag *{user-select:none}
 .pc{scroll-snap-align:start;display:flex;flex-direction:column;gap:16px;padding:24px;border-radius:20px;border:1px solid var(--line);background:var(--surface);min-height:250px}
 .pc .area{align-self:flex-start;font:600 .72rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:6px;background:var(--accent-soft);color:var(--accent)}
@@ -327,6 +328,25 @@ details.acc[open]::details-content{block-size:auto}
 .dots{display:flex;gap:6px}
 .dots button{appearance:none;width:8px;height:8px;padding:0;border:0;border-radius:4px;background:var(--faint);cursor:pointer;transition:width .3s var(--ease),background .3s}
 .dots button[aria-current="true"]{width:26px;background:var(--accent)}
+
+/* testimonials */
+.empty{max-width:640px;margin:0 auto;padding:clamp(28px,5vw,44px);border-radius:24px;border:1px dashed var(--faint);background:var(--surface);text-align:center;display:grid;justify-items:center;gap:14px}
+.empty p{color:var(--muted);max-width:34em}
+.empty .btn{margin-top:6px}
+.faces{display:flex;margin-bottom:4px}
+.faces i{width:44px;height:44px;border-radius:50%;border:3px solid var(--surface);background:linear-gradient(135deg,var(--accent-soft),var(--bg-soft));margin-left:-12px}
+.faces i:first-child{margin-left:0}
+.tc{scroll-snap-align:start;display:flex;flex-direction:column;gap:18px;padding:26px;border-radius:20px;border:1px solid var(--line);background:var(--surface);min-height:240px}
+.tc blockquote{flex:1;margin:0;font:500 1.06rem/1.55 var(--f-body);text-wrap:pretty}
+.tc blockquote::before{content:"\201C";display:block;font:800 2.6rem/.6 var(--f-display);color:var(--accent);margin-bottom:10px}
+.who{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line)}
+.who img{width:48px;height:48px;border-radius:50%;flex:none;background:var(--bg-soft);border:1px solid var(--line)}
+.who b{display:block;font-family:var(--f-display);font-size:1rem;line-height:1.2}
+.who a{font:500 .82rem var(--f-mono);color:var(--muted);text-decoration:none}
+.who a:hover{color:var(--accent)}
+.who span{display:block;font-size:.84rem;color:var(--muted)}
+.t-more{text-align:center;margin-top:18px;font-size:.92rem}
+.t-more a{color:var(--accent);text-underline-offset:3px}
 
 /* install band */
 .sun{background:var(--bg-soft);color:var(--ink);overflow:hidden;border-block:1px solid var(--line)}
@@ -412,7 +432,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
       <a class="btn" href="#demo"><span>Ver funcionando</span></a>
     </div>
     <p class="where">Terminal, app desktop, VS Code, JetBrains e claude.ai/code</p>
-    <div class="meta" id="meta" aria-label="Números do repositório" hidden><a href="#numeros" id="meta-clones" hidden><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M2.5 11v2.5h11V11"/></svg><b></b><span class="lbl"></span></a><a href="https://github.com/davidcromianski-dev/living-brain/stargazers" id="meta-stars" hidden><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="m8 1.8 1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.6l-3.8 2 .7-4.3-3.1-3 4.3-.6z"/></svg><b></b><span class="lbl"></span></a><a href="https://github.com/davidcromianski-dev/living-brain/issues" id="meta-issues" hidden><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="1.4" fill="currentColor" stroke="none"/></svg><b></b><span class="lbl"></span></a></div>
+    <div class="meta" id="meta" aria-label="Números do repositório" hidden><a href="https://github.com/davidcromianski-dev/living-brain/blob/traffic-data/traffic.json" id="meta-clones" hidden><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M2.5 11v2.5h11V11"/></svg><b></b><span class="lbl"></span></a><a href="https://github.com/davidcromianski-dev/living-brain/stargazers" id="meta-stars" hidden><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="m8 1.8 1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.6l-3.8 2 .7-4.3-3.1-3 4.3-.6z"/></svg><b></b><span class="lbl"></span></a><a href="https://github.com/davidcromianski-dev/living-brain/issues" id="meta-issues" hidden><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="1.4" fill="currentColor" stroke="none"/></svg><b></b><span class="lbl"></span></a></div>
 
     <div class="stage" id="stage" aria-hidden="true">
       <div class="card back" style="--ox:-250px;--oy:30px;--rot:-7deg;--d:.6;--dl:0s"><span class="ptab">ADR-</span><div class="t">Monólito modular</div><div class="ln"></div><div class="ln"></div></div>
@@ -526,6 +546,28 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
   </div>
 </section>
 
+<!-- TESTIMONIALS: entries live in testimonials.json -->
+<section class="sec" id="relatos">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Relatos</span>
+      <h2>Quem já usa</h2>
+      <p class="lead">Relatos de quem testou o Living Brain no próprio projeto.</p>
+    </div>
+    <div class="empty glow rv" id="t-empty">
+      <div class="faces" aria-hidden="true"><i></i><i></i><i></i></div>
+      <h3>Ainda não há relatos publicados</h3>
+      <p>Usou o Living Brain? Conte como foi, inclusive se ele não serviu para o seu caso. Com a sua permissão, o relato aparece aqui com a sua foto do GitHub.</p>
+      <a class="btn primary" href="https://github.com/davidcromianski-dev/living-brain/issues/new?title=Relato%3A%20&amp;body=%2A%2AComo%20voc%C3%AA%20usa%20o%20Living%20Brain%3F%2A%2A%0A%0A%0A%2A%2AO%20que%20funcionou%3F%2A%2A%0A%0A%0A%2A%2AO%20que%20n%C3%A3o%20funcionou%20ou%20faltou%3F%2A%2A%0A%0A%0A%2A%2APodemos%20publicar%20este%20relato%20no%20site%2C%20com%20seu%20usu%C3%A1rio%20do%20GitHub%20e%20sua%20foto%3F%2A%2A%20%28sim%20ou%20n%C3%A3o%29%0A"><span>Enviar um relato</span><span class="arr">→</span></a>
+    </div>
+  </div>
+  <div class="car-wrap" id="t-car" hidden>
+    <div class="track" id="t-track" tabindex="0" aria-label="Relatos de usuários"></div>
+    <div class="car-ctl wrap"><button class="arrow" id="t-prev" type="button" aria-label="Relato anterior">←</button><div class="dots" id="t-dots"></div><button class="arrow" id="t-next" type="button" aria-label="Próximo relato">→</button></div>
+    <p class="t-more wrap"><a href="https://github.com/davidcromianski-dev/living-brain/issues/new?title=Relato%3A%20&amp;body=%2A%2AComo%20voc%C3%AA%20usa%20o%20Living%20Brain%3F%2A%2A%0A%0A%0A%2A%2AO%20que%20funcionou%3F%2A%2A%0A%0A%0A%2A%2AO%20que%20n%C3%A3o%20funcionou%20ou%20faltou%3F%2A%2A%0A%0A%0A%2A%2APodemos%20publicar%20este%20relato%20no%20site%2C%20com%20seu%20usu%C3%A1rio%20do%20GitHub%20e%20sua%20foto%3F%2A%2A%20%28sim%20ou%20n%C3%A3o%29%0A">Enviar o seu relato</a></p>
+  </div>
+</section>
+
 <!-- S7 COMPARE -->
 <section class="sec" id="diferencas">
   <div class="wrap">
@@ -624,7 +666,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
       <details class="acc"><summary>Onde ficam os documentos?</summary><div class="acc-body">No seu próprio repositório. O Living Brain não guarda, não copia e não envia nada do seu produto. Por padrão as pastas ficam na raiz, ou numa pasta que você escolher com <code>.living-brain.yml</code>.</div></details>
       <details class="acc"><summary>Em que idioma os documentos são escritos?</summary><div class="acc-body">Você conversa em português, mas hoje o plugin escreve os arquivos em inglês, para manter a documentação consistente.</div></details>
       <details class="acc"><summary>Quanto custa?</summary><div class="acc-body">O plugin é gratuito e de código aberto, sob a licença MIT. O uso do Claude Code segue o seu plano do Claude.</div></details>
-      <details class="acc" id="numeros"><summary>O que o número de clones no topo conta?</summary><div class="acc-body">Quando alguém adiciona o marketplace do Living Brain, o Claude Code clona este repositório, e o GitHub registra esse clone. É o sinal público mais próximo de uma instalação, mas não é uma contagem de instalações: também entram atualizações, clones de quem só quis ler o código, automações e as sessões do próprio autor. Os dados brutos são públicos no arquivo <a href="https://github.com/davidcromianski-dev/living-brain/blob/traffic-data/traffic.json">traffic.json</a>.</div></details>
       <details class="acc"><summary>Preciso instalar mais alguma coisa?</summary><div class="acc-body">Não. Opcionalmente, o plugin <a href="https://github.com/obra/superpowers">superpowers</a> permite delegar documentos longos a subagentes. O Living Brain funciona sem ele.</div></details>
     </div>
     <div class="contact glow rv">
@@ -811,29 +852,58 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
   ];
   var track = $("#track"), dots = $("#dots"), filters = $("#filters"), filter = "Todos";
   prompts.forEach(function(p){ var c = el("article", "pc glow", '<span class="area">' + esc(p[0]) + "</span><q>" + esc(p[1]) + '</q><div class="out"><span>Vira <code>' + esc(p[2]) + '</code></span><button class="cbtn" type="button" data-copy="prompt">Copiar</button></div>'); c.dataset.area = p[0]; c.dataset.text = p[1]; track.appendChild(c); });
-  ["Todos","Negócio","Produto","Técnico","Revisão"].forEach(function(f){ var b = el("button", null, f); b.type = "button"; b.setAttribute("aria-pressed", f === filter ? "true" : "false"); b.addEventListener("click", function(){ filter = f; $$("button", filters).forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); $$(".pc", track).forEach(function(c){ c.hidden = !(f === "Todos" || c.dataset.area === f); }); track.scrollTo({ left:0, behavior:"smooth" }); buildDots(); }); filters.appendChild(b); });
-  function shown(){ return $$(".pc", track).filter(function(c){ return !c.hidden; }); }
-  function step(){ var c = shown()[0]; return c ? c.getBoundingClientRect().width + 16 : 300; }
-  function idx(){ return Math.round(track.scrollLeft / step()); }
-  function buildDots(){ dots.innerHTML = ""; shown().forEach(function(c, i){ var b = el("button"); b.type = "button"; b.setAttribute("aria-label", "Ir para o pedido " + (i + 1)); b.addEventListener("click", function(){ hold(); track.scrollTo({ left:i * step(), behavior:"smooth" }); }); dots.appendChild(b); }); markDot(); }
-  function markDot(){ var i = idx(); $$("button", dots).forEach(function(b, j){ b.setAttribute("aria-current", j === i ? "true" : "false"); }); }
-  function go(dir){ var max = track.scrollWidth - track.clientWidth - 4; if (dir > 0 && track.scrollLeft >= max) track.scrollTo({ left:0, behavior:"smooth" }); else track.scrollBy({ left:dir * step(), behavior:"smooth" }); }
-  var pausedUntil = 0, carVisible = false;
-  function hold(){ pausedUntil = Date.now() + 8000; }
-  $("#prev").addEventListener("click", function(){ hold(); go(-1); });
-  $("#next").addEventListener("click", function(){ hold(); go(1); });
-  track.addEventListener("scroll", function(){ requestAnimationFrame(markDot); }, { passive:true });
-  track.addEventListener("pointerenter", function(){ pausedUntil = Infinity; });
-  track.addEventListener("pointerleave", function(){ pausedUntil = Date.now() + 2000; });
-  track.addEventListener("focusin", hold);
-  if ("IntersectionObserver" in window) new IntersectionObserver(function(es){ carVisible = es[0].isIntersecting; }, { threshold:.3 }).observe(track);
-  setInterval(function(){ if (carVisible && !calm() && !document.hidden && Date.now() > pausedUntil) go(1); }, 4200);
-  var drag = null;
-  track.addEventListener("pointerdown", function(e){ if (e.pointerType !== "mouse" || e.target.closest("button")) return; drag = { x:e.clientX, l:track.scrollLeft, moved:false }; track.classList.add("drag"); track.setPointerCapture(e.pointerId); });
-  track.addEventListener("pointermove", function(e){ if (!drag) return; var dx = e.clientX - drag.x; if (Math.abs(dx) > 3) drag.moved = true; track.scrollLeft = drag.l - dx; });
-  function endDrag(){ if (!drag) return; var i = Math.round(track.scrollLeft / step()); drag = null; track.classList.remove("drag"); track.scrollTo({ left:i * step(), behavior:"smooth" }); hold(); }
-  track.addEventListener("pointerup", endDrag); track.addEventListener("pointercancel", endDrag);
-  buildDots();
+  ["Todos","Negócio","Produto","Técnico","Revisão"].forEach(function(f){ var b = el("button", null, f); b.type = "button"; b.setAttribute("aria-pressed", f === filter ? "true" : "false"); b.addEventListener("click", function(){ filter = f; $$("button", filters).forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); $$(".pc", track).forEach(function(c){ c.hidden = !(f === "Todos" || c.dataset.area === f); }); track.scrollTo({ left:0, behavior:"smooth" }); promptsCar.rebuild(); }); filters.appendChild(b); });
+  var promptsCar = carousel(track, dots, $("#prev"), $("#next"), "Ir para o pedido ");
+
+  /* carousel: snap track, arrows, dots, autoplay that pauses on interaction, mouse drag */
+  function carousel(track, dots, prev, next, dotLabel){
+    function shown(){ return $$(":scope > *", track).filter(function(c){ return !c.hidden; }); }
+    function step(){ var c = shown()[0]; return c ? c.getBoundingClientRect().width + 16 : 300; }
+    function idx(){ return Math.round(track.scrollLeft / step()); }
+    function markDot(){ var i = idx(); $$("button", dots).forEach(function(b, j){ b.setAttribute("aria-current", j === i ? "true" : "false"); }); }
+    function buildDots(){ dots.innerHTML = ""; shown().forEach(function(c, i){ var b = el("button"); b.type = "button"; b.setAttribute("aria-label", dotLabel + (i + 1)); b.addEventListener("click", function(){ hold(); track.scrollTo({ left:i * step(), behavior:"smooth" }); }); dots.appendChild(b); }); markDot(); }
+    function go(dir){ var max = track.scrollWidth - track.clientWidth - 4; if (dir > 0 && track.scrollLeft >= max) track.scrollTo({ left:0, behavior:"smooth" }); else track.scrollBy({ left:dir * step(), behavior:"smooth" }); }
+    var pausedUntil = 0, visible = false, drag = null;
+    function hold(){ pausedUntil = Date.now() + 8000; }
+    prev.addEventListener("click", function(){ hold(); go(-1); });
+    next.addEventListener("click", function(){ hold(); go(1); });
+    track.addEventListener("scroll", function(){ requestAnimationFrame(markDot); }, { passive:true });
+    track.addEventListener("pointerenter", function(){ pausedUntil = Infinity; });
+    track.addEventListener("pointerleave", function(){ pausedUntil = Date.now() + 2000; });
+    track.addEventListener("focusin", hold);
+    if ("IntersectionObserver" in window) new IntersectionObserver(function(es){ visible = es[0].isIntersecting; }, { threshold:.3 }).observe(track);
+    setInterval(function(){ if (visible && !calm() && !document.hidden && Date.now() > pausedUntil && track.scrollWidth > track.clientWidth + 4) go(1); }, 4200);
+    track.addEventListener("pointerdown", function(e){ if (e.pointerType !== "mouse" || e.target.closest("button, a")) return; drag = { x:e.clientX, l:track.scrollLeft }; track.classList.add("drag"); track.setPointerCapture(e.pointerId); });
+    track.addEventListener("pointermove", function(e){ if (drag) track.scrollLeft = drag.l - (e.clientX - drag.x); });
+    function endDrag(){ if (!drag) return; var i = Math.round(track.scrollLeft / step()); drag = null; track.classList.remove("drag"); track.scrollTo({ left:i * step(), behavior:"smooth" }); hold(); }
+    track.addEventListener("pointerup", endDrag); track.addEventListener("pointercancel", endDrag);
+    function fit(){ var f = track.scrollWidth <= track.clientWidth + 4; track.classList.toggle("fit", f); prev.parentNode.hidden = f; }
+    addEventListener("resize", fit, { passive:true });
+    buildDots(); fit();
+    return { rebuild:function(){ buildDots(); fit(); } };
+  }
+
+  /* testimonials: read testimonials.json next to this page. Each entry:
+     { "github": "login", "text": "the report", "name": "optional, else the GitHub profile name",
+       "role": "optional, e.g. Tech lead at a clinic" }
+     The photo comes from GitHub; the profile name is looked up through the public API only when "name" is missing. */
+  function loadTestimonials(){
+    if (!window.fetch) return;
+    fetch("testimonials.json", { cache:"no-cache" }).then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }).then(function(list){
+      list = (Array.isArray(list) ? list : []).filter(function(t){ return t && t.github && t.text; });
+      if (!list.length) return;
+      var tt = $("#t-track");
+      list.forEach(function(t){
+        var login = String(t.github).replace(/^@/, ""), profile = "https://github.com/" + encodeURIComponent(login);
+        var c = el("article", "tc glow",
+          "<blockquote>" + esc(t.text) + '</blockquote><div class="who"><img alt="" loading="lazy" width="48" height="48" src="' + profile + '.png?size=96"><div><b>' + esc(t.name || login) + '</b><a href="' + profile + '">@' + esc(login) + "</a>" + (t.role ? "<span>" + esc(t.role) + "</span>" : "") + "</div></div>");
+        tt.appendChild(c);
+        if (!t.name) getJSON("https://api.github.com/users/" + encodeURIComponent(login)).then(function(u){ if (u && u.name) $("b", c).textContent = u.name; }).catch(function(){});
+      });
+      $("#t-empty").hidden = true; $("#t-car").hidden = false;
+      carousel(tt, $("#t-dots"), $("#t-prev"), $("#t-next"), "Ir para o relato ");
+    }).catch(function(){});
+  }
 
   /* S9 install tabs */
   $$(".ttabs button").forEach(function(b){ b.addEventListener("click", function(){ $$(".ttabs button").forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); $("#t-me").hidden = b.dataset.t !== "me"; $("#t-team").hidden = b.dataset.t !== "team"; }); });
@@ -859,6 +929,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
     a.querySelector("b").textContent = num.format(n); a.querySelector(".lbl").textContent = n === 1 ? one : many;
     a.title = text; a.setAttribute("aria-label", text); a.hidden = false; $("#meta").hidden = false;
   }
+  loadTestimonials();
   if (window.fetch){
     var traffic = getJSON("https://raw.githubusercontent.com/" + REPO + "/traffic-data/traffic.json");
     traffic.then(function(d){ show("meta-clones", d.summary && d.summary.clones, "clone", "clones"); }).catch(function(){});
@@ -868,7 +939,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
     getJSON("https://api.github.com/search/issues?per_page=1&q=" + encodeURIComponent("repo:" + REPO + " is:issue is:open"))
       .then(function(r){ show("meta-issues", r.total_count, "issue aberta", "issues abertas"); }).catch(function(){});
   }
-  $("#meta-clones").addEventListener("click", function(){ $("#numeros").open = true; });
 })();
 </script>
 </body>
