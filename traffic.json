@@ -1,11 +1,11 @@
 {
   "repository": "davidcromianski-dev/living-brain",
-  "updated_at": "2026-11-19T18:23:13.509Z",
+  "updated_at": "2026-11-19T23:18:24.456Z",
   "summary": {
     "since": "2026-11-05",
     "clones": 42,
     "views": 27,
-    "stars": 1,
+    "stars": 2,
     "forks": 0,
     "last_14_days": {
       "clones": 42,
@@ -108,7 +108,7 @@
       "unique_cloners": 21,
       "views": 27,
       "unique_visitors": 1,
-      "stars": 1,
+      "stars": 2,
       "forks": 0
     }
   ]
