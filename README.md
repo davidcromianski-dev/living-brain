@@ -1,5 +1,8 @@
 # Living Brain
 
+[![Git clones](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdavidcromianski-dev%2Fliving-brain%2Ftraffic-data%2Ftraffic.json&query=%24.summary.clones&label=git%20clones&color=1E7552&cacheSeconds=3600)](https://github.com/davidcromianski-dev/living-brain/blob/traffic-data/traffic.json)
+[![Unique cloners, last 14 days](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdavidcromianski-dev%2Fliving-brain%2Ftraffic-data%2Ftraffic.json&query=%24.summary.last_14_days.unique_cloners&label=unique%20cloners%20%2814%20days%29&color=1E7552&cacheSeconds=3600)](https://github.com/davidcromianski-dev/living-brain/blob/traffic-data/traffic.json)
+
 A software development method in which documentation is written before the code it describes,
 and every new piece of documentation is checked against what the product has already decided.
 
@@ -69,6 +72,14 @@ See **[INSTALL.md](INSTALL.md)**. Inside Claude Code, installing takes two comma
 ```
 /plugin install living-brain@living-brain
 ```
+
+A note on the clone badges at the top: adding the marketplace makes Claude Code clone this
+repository, so the clone count is the closest public signal to an install that exists. It is not
+an install count. Plugin updates, people reading the code, automation, and the author's own
+sessions are counted too. GitHub keeps traffic data for 14 days only, so a scheduled workflow
+saves it once a day; the raw history is public in
+[`traffic.json`](https://github.com/davidcromianski-dev/living-brain/blob/traffic-data/traffic.json)
+on the `traffic-data` branch.
 
 ---
 

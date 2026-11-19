@@ -79,6 +79,12 @@ export function mergeTraffic(history, { clones, views, repo, fetchedAt }) {
     views: sum('views'),
     stars: repo.stargazers_count,
     forks: repo.forks_count,
+    last_14_days: {
+      clones: clones.count,
+      unique_cloners: clones.uniques,
+      views: views.count,
+      unique_visitors: views.uniques,
+    },
   };
   next.updated_at = fetchedAt;
   return next;
