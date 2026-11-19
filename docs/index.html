@@ -799,7 +799,7 @@ html.gesture .card.front .body{min-height:92px}
       <label class="f"><span>Usuário do GitHub <i>opcional</i></span><input id="t-github" name="github" maxlength="40" pattern="@?[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})" placeholder="@seu-usuario" autocomplete="off" spellcheck="false"><small>Para mostrar a sua foto.</small></label>
       <label class="f"><span>Função ou contexto <i>opcional</i></span><input id="t-role" name="role" maxlength="80" placeholder="Tech lead numa clínica"></label>
     </div>
-    <label class="f"><span>Relato</span><textarea id="t-text" name="text" required maxlength="800" rows="5" placeholder="Como você usa, o que funcionou, o que faltou."></textarea><small class="count"><b id="t-count">0</b> de 800</small></label>
+    <label class="f"><span>Relato</span><textarea id="t-text" name="text" required maxlength="280" rows="5" placeholder="Como você usa, o que funcionou, o que faltou."></textarea><small class="count"><b id="t-count">0</b> de 280</small></label>
     <label class="check"><input id="t-consent" name="consent" type="checkbox"><span>Autorizo publicar este relato no site, com o meu nome e a minha foto do GitHub.</span></label>
     <div class="hp" aria-hidden="true"><label>Deixe em branco<input name="website" tabindex="-1" autocomplete="off"></label></div>
     <p class="m-note">O relato vai para uma planilha privada do autor do projeto. Sem a autorização acima, ele é lido, mas não é publicado.</p>
@@ -1127,7 +1127,7 @@ html.gesture .card.front .body{min-height:92px}
       list.forEach(function(t){
         var login = String(t.github).replace(/^@/, ""), profile = "https://github.com/" + encodeURIComponent(login);
         var c = el("article", "tc glow",
-          "<blockquote>" + esc(t.text) + '</blockquote><div class="who"><img alt="" loading="lazy" width="48" height="48" src="' + profile + '.png?size=96"><div><b>' + esc(t.name || login) + '</b><a href="' + profile + '">@' + esc(login) + "</a>" + (t.role ? "<span>" + esc(t.role) + "</span>" : "") + "</div></div>");
+          "<blockquote>" + esc(t.text) + '</blockquote><div class="who"><img alt="" loading="lazy" width="48" height="48" src="https://avatars.githubusercontent.com/' + encodeURIComponent(login) + '?s=96"><div><b>' + esc(t.name || login) + '</b><a href="' + profile + '">@' + esc(login) + "</a>" + (t.role ? "<span>" + esc(t.role) + "</span>" : "") + "</div></div>");
         tt.appendChild(c);
         if (!t.name) getJSON("https://api.github.com/users/" + encodeURIComponent(login)).then(function(u){ if (u && u.name) $("b", c).textContent = u.name; }).catch(function(){});
       });
