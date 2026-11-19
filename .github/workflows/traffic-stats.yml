@@ -1,0 +1,60 @@
+# Records clone and view counts once a day, before GitHub's 14-day traffic window drops them.
+# The history is committed to the `traffic-data` branch (file `traffic.json`), not to main, so
+# the daily commits stay out of the project's history. The branch is created on the first run.
+#
+# Requires the TRAFFIC_TOKEN secret: a fine-grained personal access token scoped to this
+# repository with "Administration: Read-only". The default GITHUB_TOKEN cannot read traffic.
+name: Traffic stats
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: traffic-stats
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the collector script
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/scripts
+
+      - name: Check out the data branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir data && cd data
+          git init -q
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git fetch -q --depth=1 origin traffic-data; then
+            git checkout -q -B traffic-data FETCH_HEAD
+          else
+            echo "No traffic-data branch yet; starting it."
+            git checkout -q --orphan traffic-data
+          fi
+
+      - name: Collect traffic
+        env:
+          TRAFFIC_TOKEN: ${{ secrets.TRAFFIC_TOKEN }}
+        run: node .github/scripts/collect-traffic.mjs data/traffic.json
+
+      - name: Commit and push
+        working-directory: data
+        run: |
+          git add traffic.json
+          if git diff --cached --quiet; then
+            echo "No changes to record."
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898315+github-actions[bot]@users.noreply.github.com" \
+              commit -q -m "chore(traffic): record stats for $(date -u +%F)"
+          git push -q origin traffic-data
