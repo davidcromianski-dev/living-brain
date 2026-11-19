@@ -361,7 +361,6 @@ details.acc[open]::details-content{block-size:auto}
 /* testimonials */
 .empty{max-width:640px;margin:0 auto;padding:clamp(28px,5vw,44px);border-radius:24px;border:1px dashed var(--faint);background:var(--surface);text-align:center;display:grid;justify-items:center;gap:14px}
 .empty p{color:var(--muted);max-width:34em}
-.empty .btn{margin-top:6px}
 .faces{display:flex;margin-bottom:4px}
 .faces i{width:44px;height:44px;border-radius:50%;border:3px solid var(--surface);background:linear-gradient(135deg,var(--accent-soft),var(--bg-soft));margin-left:-12px}
 .faces i:first-child{margin-left:0}
@@ -374,8 +373,44 @@ details.acc[open]::details-content{block-size:auto}
 .who a{font:500 .82rem var(--f-mono);color:var(--muted);text-decoration:none}
 .who a:hover{color:var(--accent)}
 .who span{display:block;font-size:.84rem;color:var(--muted)}
-.t-more{text-align:center;margin-top:18px;font-size:.92rem}
-.t-more a{color:var(--accent);text-underline-offset:3px}
+.t-cta{display:flex;justify-content:center;margin-top:clamp(36px,5vw,56px)}
+.t-open{appearance:none;display:inline-flex;align-items:center;gap:10px;padding:10px 6px;border:0;background:none;color:var(--muted);font:400 .95rem var(--f-body);cursor:pointer}
+.t-open b{font-weight:600;color:var(--accent);background:linear-gradient(currentColor,currentColor) 0 100%/0 1.5px no-repeat;transition:background-size .3s var(--ease)}
+.t-open:hover b,.t-open:focus-visible b{background-size:100% 1.5px}
+.t-open svg{color:var(--accent)}
+
+/* testimonial form, in a native modal dialog */
+html:has(dialog[open]){overflow:hidden}
+.modal{width:min(560px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:1px solid var(--line);border-radius:22px;background:var(--surface);color:var(--ink);box-shadow:0 40px 100px -30px rgba(0,0,0,.5);overflow:auto;opacity:1;translate:0 0;transition:opacity .3s var(--ease),translate .3s var(--ease),overlay .3s allow-discrete,display .3s allow-discrete}
+.modal::backdrop{background:color-mix(in srgb,var(--night) 45%,transparent);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:opacity .3s,overlay .3s allow-discrete,display .3s allow-discrete}
+@starting-style{.modal[open]{opacity:0;translate:0 16px}.modal[open]::backdrop{opacity:0}}
+.t-form,.m-done{display:grid;gap:14px;padding:clamp(20px,4vw,30px)}
+.m-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.m-head h3{font-size:1.5rem}
+.m-x{appearance:none;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--bg-soft);color:var(--ink);cursor:pointer}
+.m-sub{margin-top:-8px;color:var(--muted)}
+.f{display:grid;gap:6px;min-width:0;align-content:start}
+.f>span{font-size:.88rem;font-weight:600}
+.f i{font-style:normal;font-weight:400;color:var(--muted)}
+.f small{font-size:.78rem;color:var(--muted)}
+.f .count{justify-self:end}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.f input,.f textarea{width:100%;font:400 1rem var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 13px;transition:border-color .2s,box-shadow .2s}
+.f textarea{resize:vertical;min-height:120px}
+.f input:focus,.f textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 16%,transparent)}
+.f input:user-invalid,.f textarea:user-invalid{border-color:#D14343}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;cursor:pointer}
+.check input{margin-top:3px;accent-color:var(--accent);width:16px;height:16px;flex:none}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.m-note{font-size:.8rem;color:var(--muted)}
+.m-err{font-size:.9rem;color:#D14343}
+.m-err a{color:inherit}
+.m-foot{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.m-foot .btn{padding:12px 18px}
+.m-foot .btn[disabled]{opacity:.6;cursor:progress}
+.m-done{justify-items:center;text-align:center;padding-block:40px}
+.m-done p{color:var(--muted);max-width:30em}
+.m-ok{display:grid;place-items:center;width:60px;height:60px;border-radius:50%;background:var(--accent-soft);color:var(--accent)}
 
 /* install band */
 .sun{background:var(--bg-soft);color:var(--ink);overflow:hidden;border-block:1px solid var(--line)}
@@ -449,7 +484,7 @@ html.gesture .card.front .body{min-height:92px}
   .cx .v{font-size:.98rem}
   .cx-tag{font-size:.62rem;letter-spacing:.06em;padding:5px 8px}
 }
-@media (max-width:520px){ .hgrid{grid-template-columns:1fr} .bubble{max-width:100%} }
+@media (max-width:520px){ .f-row{grid-template-columns:1fr} .hgrid{grid-template-columns:1fr} .bubble{max-width:100%} }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
@@ -604,17 +639,18 @@ html.gesture .card.front .body{min-height:92px}
       <h2>Quem já usa</h2>
       <p class="lead">Relatos de quem testou o Living Brain no próprio projeto.</p>
     </div>
-    <div class="empty glow rv" id="t-empty">
+    <div class="empty rv" id="t-empty">
       <div class="faces" aria-hidden="true"><i></i><i></i><i></i></div>
       <h3>Ainda não há relatos publicados</h3>
-      <p>Usou o Living Brain? Conte como foi, inclusive se ele não serviu para o seu caso. Com a sua permissão, o relato aparece aqui com a sua foto do GitHub.</p>
-      <a class="btn primary" href="https://github.com/davidcromianski-dev/living-brain/issues/new?title=Relato%3A%20&amp;body=%2A%2AComo%20voc%C3%AA%20usa%20o%20Living%20Brain%3F%2A%2A%0A%0A%0A%2A%2AO%20que%20funcionou%3F%2A%2A%0A%0A%0A%2A%2AO%20que%20n%C3%A3o%20funcionou%20ou%20faltou%3F%2A%2A%0A%0A%0A%2A%2APodemos%20publicar%20este%20relato%20no%20site%2C%20com%20seu%20usu%C3%A1rio%20do%20GitHub%20e%20sua%20foto%3F%2A%2A%20%28sim%20ou%20n%C3%A3o%29%0A"><span>Enviar um relato</span><span class="arr">→</span></a>
+      <p>Os primeiros relatos de quem testou o Living Brain vão aparecer aqui, com a foto do GitHub de cada pessoa.</p>
     </div>
   </div>
   <div class="car-wrap" id="t-car" hidden>
     <div class="track" id="t-track" tabindex="0" aria-label="Relatos de usuários"></div>
     <div class="car-ctl wrap"><button class="arrow" id="t-prev" type="button" aria-label="Relato anterior"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 10H4M9 5l-5 5 5 5"/></svg></button><div class="dots" id="t-dots"></div><button class="arrow" id="t-next" type="button" aria-label="Próximo relato"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></button></div>
-    <p class="t-more wrap"><a href="https://github.com/davidcromianski-dev/living-brain/issues/new?title=Relato%3A%20&amp;body=%2A%2AComo%20voc%C3%AA%20usa%20o%20Living%20Brain%3F%2A%2A%0A%0A%0A%2A%2AO%20que%20funcionou%3F%2A%2A%0A%0A%0A%2A%2AO%20que%20n%C3%A3o%20funcionou%20ou%20faltou%3F%2A%2A%0A%0A%0A%2A%2APodemos%20publicar%20este%20relato%20no%20site%2C%20com%20seu%20usu%C3%A1rio%20do%20GitHub%20e%20sua%20foto%3F%2A%2A%20%28sim%20ou%20n%C3%A3o%29%0A">Enviar o seu relato</a></p>
+  </div>
+  <div class="wrap t-cta">
+    <button class="t-open" id="t-open" type="button"><svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16h3l8.5-8.5a2.1 2.1 0 0 0-3-3L4 13v3z"/></svg><span>Usou o Living Brain? <b>Conte como foi</b></span></button>
   </div>
 </section>
 
@@ -735,6 +771,33 @@ html.gesture .card.front .body{min-height:92px}
 <footer><div class="wrap"><span>Living Brain v0.1.1. Código aberto sob a <a href="https://github.com/davidcromianski-dev/living-brain/blob/master/LICENSE">licença MIT</a>.</span><span>Criado por <a href="https://github.com/davidcromianski-dev">David Cromianski</a>. <a href="https://github.com/davidcromianski-dev/living-brain">Ver no GitHub</a></span></div></footer>
 
 <nav class="dotnav" id="dotnav" aria-label="Seções da página"></nav>
+
+<dialog class="modal" id="t-modal" aria-labelledby="t-title">
+  <form id="t-form" class="t-form">
+    <div class="m-head">
+      <h3 id="t-title">Conte como foi</h3>
+      <button class="m-x" type="button" data-close aria-label="Fechar"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
+    </div>
+    <p class="m-sub">Vale também se ele não serviu para o seu caso.</p>
+    <label class="f"><span>Nome</span><input id="t-name" name="name" required maxlength="80" autocomplete="name"></label>
+    <div class="f-row">
+      <label class="f"><span>Usuário do GitHub <i>opcional</i></span><input id="t-github" name="github" maxlength="40" pattern="@?[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})" placeholder="@seu-usuario" autocomplete="off" spellcheck="false"><small>Para mostrar a sua foto.</small></label>
+      <label class="f"><span>Função ou contexto <i>opcional</i></span><input id="t-role" name="role" maxlength="80" placeholder="Tech lead numa clínica"></label>
+    </div>
+    <label class="f"><span>Relato</span><textarea id="t-text" name="text" required maxlength="800" rows="5" placeholder="Como você usa, o que funcionou, o que faltou."></textarea><small class="count"><b id="t-count">0</b> de 800</small></label>
+    <label class="check"><input id="t-consent" name="consent" type="checkbox"><span>Autorizo publicar este relato no site, com o meu nome e a minha foto do GitHub.</span></label>
+    <div class="hp" aria-hidden="true"><label>Deixe em branco<input name="website" tabindex="-1" autocomplete="off"></label></div>
+    <p class="m-note">O relato vai para uma planilha privada do autor do projeto. Sem a autorização acima, ele é lido, mas não é publicado.</p>
+    <p class="m-err" id="t-err" role="alert" hidden></p>
+    <div class="m-foot"><button class="btn" type="button" data-close><span>Cancelar</span></button><button class="btn primary" id="t-send" type="submit"><span>Enviar relato</span></button></div>
+  </form>
+  <div class="m-done" id="t-done" hidden>
+    <span class="m-ok" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+    <h3>Obrigado!</h3>
+    <p id="t-done-msg">Seu relato chegou.</p>
+    <button class="btn primary" type="button" data-close><span>Fechar</span></button>
+  </div>
+</dialog>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -1130,14 +1193,14 @@ html.gesture .card.front .body{min-height:92px}
     return true;
   }
   addEventListener("wheel", function(e){
-    if (!gesture || e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX) || e.target.closest(".track")) return;
+    if (!gesture || e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX) || e.target.closest(".track, dialog")) return;
     var now = performance.now(), fresh = now - lastWheel > 180; lastWheel = now;
     if (moving) { e.preventDefault(); return; }
     if (Math.abs(e.deltaY) < 2) return;
     if (stepSec(e.deltaY > 0 ? 1 : -1, fresh)) e.preventDefault();
   }, { passive:false });
   addEventListener("keydown", function(e){
-    if (!gesture || e.altKey || e.ctrlKey || e.metaKey || e.target.closest("input, textarea, select, button, summary, [contenteditable], .track")) return;
+    if (!gesture || e.altKey || e.ctrlKey || e.metaKey || e.target.closest("input, textarea, select, button, summary, [contenteditable], .track, dialog")) return;
     var k = e.key, dir = (k === "PageDown" || k === "ArrowDown" || (k === " " && !e.shiftKey)) ? 1 : (k === "PageUp" || k === "ArrowUp" || (k === " " && e.shiftKey)) ? -1 : 0;
     if (!dir) return;
     if (moving) { e.preventDefault(); return; }
@@ -1151,6 +1214,45 @@ html.gesture .card.front .body{min-height:92px}
     e.preventDefault(); goSec(i);
   });
   markSec();
+
+
+  /* testimonial form. Submissions go to a Google Apps Script web app that appends a row to a
+     private sheet (see .github/scripts/testimonials-sheet.gs). Until its URL is set here, the
+     form opens a GitHub issue prefilled with the same fields, so nothing is lost. */
+  var TESTIMONIAL_ENDPOINT = "";
+  var modal = $("#t-modal"), form = $("#t-form"), done = $("#t-done"), err = $("#t-err"), send = $("#t-send"), text = $("#t-text");
+  function openModal(){
+    form.hidden = false; done.hidden = true; err.hidden = true;
+    if (modal.showModal) modal.showModal(); else modal.setAttribute("open", "");
+    setTimeout(function(){ $("#t-name").focus(); }, 30);
+  }
+  function closeModal(){ if (modal.close) modal.close(); else modal.removeAttribute("open"); }
+  $("#t-open").addEventListener("click", openModal);
+  modal.addEventListener("click", function(e){ if (e.target === modal || e.target.closest("[data-close]")) closeModal(); });
+  text.addEventListener("input", function(){ $("#t-count").textContent = text.value.length; });
+  function issueURL(d){
+    var body = "**Nome:** " + d.name + "\n**GitHub:** " + (d.github || "-") + "\n**Função ou contexto:** " + (d.role || "-") +
+      "\n**Pode publicar no site:** " + (d.consent ? "sim" : "não") + "\n\n" + d.text + "\n";
+    return "https://github.com/davidcromianski-dev/living-brain/issues/new?title=" + encodeURIComponent("Relato: " + d.name) + "&body=" + encodeURIComponent(body);
+  }
+  function finish(msg){ form.hidden = true; done.hidden = false; $("#t-done-msg").textContent = msg; form.reset(); $("#t-count").textContent = "0"; }
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    var d = { name:form.name.value.trim(), github:form.github.value.trim().replace(/^@/, ""), role:form.role.value.trim(), text:text.value.trim(), consent:form.consent.checked, page:location.href };
+    if (form.website.value) { finish("Seu relato chegou."); return; }
+    err.hidden = true;
+    if (!TESTIMONIAL_ENDPOINT){
+      window.open(issueURL(d), "_blank", "noopener");
+      finish("Abrimos o GitHub com o seu relato já preenchido. É só confirmar o envio por lá.");
+      return;
+    }
+    send.disabled = true; $("span", send).textContent = "Enviando...";
+    fetch(TESTIMONIAL_ENDPOINT, { method:"POST", mode:"no-cors", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:JSON.stringify(d) })
+      .then(function(){ finish("Seu relato chegou. Se você autorizou, ele aparece aqui depois de uma revisão."); })
+      .catch(function(){ err.innerHTML = 'Não foi possível enviar agora. Tente de novo em instantes, ou <a href="' + issueURL(d).replace(/"/g, "&quot;") + '" target="_blank" rel="noopener">envie pelo GitHub</a>.'; err.hidden = false; })
+      .then(function(){ send.disabled = false; $("span", send).textContent = "Enviar relato"; });
+  });
 
   /* repository numbers badge. Clones come from traffic.json, saved daily by
      .github/workflows/traffic-stats.yml; stars and open issues come live from the public GitHub API.
