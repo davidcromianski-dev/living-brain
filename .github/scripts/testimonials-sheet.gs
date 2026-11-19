@@ -35,7 +35,7 @@ function doPost(e) {
     if (data.website) return reply_({ ok: true }); // honeypot filled: a bot, drop it quietly
 
     const name = clean_(data.name, 80);
-    const text = clean_(data.text, 800);
+    const text = clean_(data.text, 280);
     if (!name || !text) return reply_({ ok: false, error: 'missing name or text' });
 
     sheet_().appendRow([
