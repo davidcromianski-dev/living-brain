@@ -1219,7 +1219,7 @@ html.gesture .card.front .body{min-height:92px}
   /* testimonial form. Submissions go to a Google Apps Script web app that appends a row to a
      private sheet (see .github/scripts/testimonials-sheet.gs). Until its URL is set here, the
      form opens a GitHub issue prefilled with the same fields, so nothing is lost. */
-  var TESTIMONIAL_ENDPOINT = "";
+  var TESTIMONIAL_ENDPOINT = "https://script.google.com/macros/s/AKfycbwxYPeJlA241rdv0qkhSDF6U0svIyjXEIY0SXrYQw_aSXP4r5uXNb1LSgsv8G_oZ7o6mg/exec";
   var modal = $("#t-modal"), form = $("#t-form"), done = $("#t-done"), err = $("#t-err"), send = $("#t-send"), text = $("#t-text");
   function openModal(){
     form.hidden = false; done.hidden = true; err.hidden = true;
@@ -1248,8 +1248,9 @@ html.gesture .card.front .body{min-height:92px}
       return;
     }
     send.disabled = true; $("span", send).textContent = "Enviando...";
-    fetch(TESTIMONIAL_ENDPOINT, { method:"POST", mode:"no-cors", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:JSON.stringify(d) })
-      .then(function(){ finish("Seu relato chegou. Se você autorizou, ele aparece aqui depois de uma revisão."); })
+    fetch(TESTIMONIAL_ENDPOINT, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:JSON.stringify(d) })
+      .then(function(r){ return r.json(); })
+      .then(function(res){ if (!res || !res.ok) throw new Error("rejected"); finish("Seu relato chegou. Se você autorizou, ele aparece aqui depois de uma revisão."); })
       .catch(function(){ err.innerHTML = 'Não foi possível enviar agora. Tente de novo em instantes, ou <a href="' + issueURL(d).replace(/"/g, "&quot;") + '" target="_blank" rel="noopener">envie pelo GitHub</a>.'; err.hidden = false; })
       .then(function(){ send.disabled = false; $("span", send).textContent = "Enviar relato"; });
   });
