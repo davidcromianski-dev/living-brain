@@ -448,6 +448,15 @@ pre.json{margin:0;padding:6px 12px;font:400 .82rem/1.6 var(--f-mono);overflow-x:
 footer{border-top:1px solid var(--line);padding-block:28px 40px;color:var(--muted);font-size:.88rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
 
+/* analytics consent */
+.consent{position:fixed;z-index:85;left:50%;translate:-50% 0;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(640px,calc(100vw - 32px));display:flex;gap:18px;align-items:center;padding:16px 16px 16px 22px;border-radius:20px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 92%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 20px 50px -20px rgba(0,0,0,.45);font-size:.9rem;line-height:1.5;color:var(--muted);animation:cin .5s var(--ease) both}
+.consent b{display:block;color:var(--ink);font-size:.95rem}
+.consent-b{display:flex;gap:8px;flex:none}
+.consent .btn{padding:10px 16px;font-size:.88rem}
+@keyframes cin{from{opacity:0;translate:-50% 20px}}
+.linkbtn{appearance:none;border:0;background:none;padding:0;font:inherit;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+@media (max-width:620px){ .consent{flex-direction:column;align-items:stretch;gap:12px} .consent-b{justify-content:flex-end} }
+
 /* toast */
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));translate:-50% 20px;padding:10px 18px;border-radius:999px;background:var(--ink);color:var(--bg);font-size:.9rem;opacity:0;pointer-events:none;transition:all .3s var(--ease);z-index:90}
 .toast.show{opacity:1;translate:-50% 0}
@@ -783,7 +792,7 @@ html.gesture .card.front .body{min-height:92px}
 </section>
 </main>
 
-<footer><div class="wrap"><span>Living Brain v0.1.1. Código aberto sob a <a href="https://github.com/davidcromianski-dev/living-brain/blob/master/LICENSE">licença MIT</a>.</span><span>Criado por <a href="https://github.com/davidcromianski-dev">David Cromianski</a>. <a href="https://github.com/davidcromianski-dev/living-brain">Ver no GitHub</a></span></div></footer>
+<footer><div class="wrap"><span>Living Brain v0.1.1. Código aberto sob a <a href="https://github.com/davidcromianski-dev/living-brain/blob/master/LICENSE">licença MIT</a>. <button class="linkbtn" id="consent-open" type="button">Métricas e cookies</button></span><span>Criado por <a href="https://github.com/davidcromianski-dev">David Cromianski</a>. <a href="https://github.com/davidcromianski-dev/living-brain">Ver no GitHub</a></span></div></footer>
 
 <nav class="dotnav" id="dotnav" aria-label="Seções da página"></nav>
 
@@ -813,6 +822,11 @@ html.gesture .card.front .body{min-height:92px}
     <button class="btn primary" type="button" data-close><span>Fechar</span></button>
   </div>
 </dialog>
+
+<div class="consent" id="consent" role="region" aria-label="Métricas do site" hidden>
+  <p><b>Posso medir como o site é usado?</b>Uso o Microsoft Clarity para ver cliques, rolagem e gravações anônimas da navegação. O que você digita nos campos não é gravado.</p>
+  <div class="consent-b"><button class="btn" type="button" data-consent="no"><span>Recusar</span></button><button class="btn primary" type="button" data-consent="yes"><span>Aceitar</span></button></div>
+</div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -1258,6 +1272,7 @@ html.gesture .card.front .body{min-height:92px}
     if (form.website.value) { finish("Seu relato chegou."); return; }
     err.hidden = true;
     if (!TESTIMONIAL_ENDPOINT){
+      metric("testimonial_sent_github");
       window.open(issueURL(d), "_blank", "noopener");
       finish("Abrimos o GitHub com o seu relato já preenchido. É só confirmar o envio por lá.");
       return;
@@ -1265,10 +1280,60 @@ html.gesture .card.front .body{min-height:92px}
     send.disabled = true; $("span", send).textContent = "Enviando...";
     fetch(TESTIMONIAL_ENDPOINT, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:JSON.stringify(d) })
       .then(function(r){ return r.json(); })
-      .then(function(res){ if (!res || !res.ok) throw new Error("rejected"); finish("Seu relato chegou. Se você autorizou, ele aparece aqui depois de uma revisão."); })
-      .catch(function(){ err.innerHTML = 'Não foi possível enviar agora. Tente de novo em instantes, ou <a href="' + issueURL(d).replace(/"/g, "&quot;") + '" target="_blank" rel="noopener">envie pelo GitHub</a>.'; err.hidden = false; })
+      .then(function(res){ if (!res || !res.ok) throw new Error("rejected"); metric("testimonial_sent"); finish("Seu relato chegou. Se você autorizou, ele aparece aqui depois de uma revisão."); })
+      .catch(function(){ metric("testimonial_error"); err.innerHTML = 'Não foi possível enviar agora. Tente de novo em instantes, ou <a href="' + issueURL(d).replace(/"/g, "&quot;") + '" target="_blank" rel="noopener">envie pelo GitHub</a>.'; err.hidden = false; })
       .then(function(){ send.disabled = false; $("span", send).textContent = "Enviar relato"; });
   });
+
+
+  /* analytics: Microsoft Clarity, loaded only after the visitor accepts. The choice is kept in this
+     browser; "Métricas e cookies" in the footer reopens it. Clarity masks what people type. */
+  var CLARITY_ID = "zgbfctcwco", CONSENT_KEY = "lb-analytics", consentBox = $("#consent");
+  function readConsent(){ try { return localStorage.getItem(CONSENT_KEY); } catch(e){ return null; } }
+  function saveConsent(v){ try { localStorage.setItem(CONSENT_KEY, v); } catch(e){} }
+  function loadClarity(){
+    if (window.clarity) return;
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", CLARITY_ID);
+    window.clarity("consent");
+    window.clarity("set", "scroll_mode", gesture ? "one_per_gesture" : "native");
+  }
+  function metric(name){ try { if (window.clarity && readConsent() === "yes") window.clarity("event", name); } catch(e){} }
+  $$("[data-consent]", consentBox).forEach(function(b){ b.addEventListener("click", function(){
+    var before = readConsent(), v = b.dataset.consent;
+    saveConsent(v); consentBox.hidden = true;
+    if (v === "yes") loadClarity();
+    else if (before === "yes") location.reload();   /* stop a running Clarity session */
+  }); });
+  $("#consent-open").addEventListener("click", function(){ consentBox.hidden = false; });
+  if (readConsent() === "yes") loadClarity(); else if (!readConsent()) consentBox.hidden = false;
+
+  /* what counts as interest: copying the install, using the demo and the compare slider, reaching out */
+  document.addEventListener("click", function(e){
+    var t = e.target, c;
+    if ((c = t.closest(".cbtn"))) metric(c.dataset.copy === "prompt" ? "copy_prompt" : c.dataset.copy === "json" ? "copy_team_settings" : "copy_install_command");
+    else if (t.closest("#dtabs button")) metric("demo_pick_example");
+    else if (t.closest("#filters button")) metric("prompts_filter");
+    else if (t.closest("#t-open")) metric("testimonial_open");
+    else if (t.closest(".dotnav a")) metric("nav_dot");
+    else if (t.closest('.ttabs button[data-t="team"]')) metric("install_team_tab");
+    else if (t.closest('details.acc > summary')) metric("faq_or_table_open");
+    else if ((c = t.closest("a[href]"))){
+      var h = c.getAttribute("href");
+      if (h === "#instalar") metric("cta_install");
+      else if (/issues\/new/.test(h)) metric("open_issue");
+      else if (/linkedin\.com/.test(h)) metric("outbound_linkedin");
+      else if (/instagram\.com/.test(h)) metric("outbound_instagram");
+      else if (/github\.com\/davidcromianski-dev\/living-brain\/?$/.test(h)) metric("outbound_repo");
+      else if (/github\.com\/davidcromianski-dev\/?$/.test(h)) metric("outbound_github_profile");
+    }
+  }, true);
+  var cxSeen = false;
+  function cxUsed(){ if (!cxSeen){ cxSeen = true; metric("compare_used"); } }
+  $("#cx").addEventListener("pointerdown", cxUsed); $("#cx-range").addEventListener("input", cxUsed);
 
   /* repository numbers badge. Clones come from traffic.json, saved daily by
      .github/workflows/traffic-stats.yml; stars and open issues come live from the public GitHub API.
