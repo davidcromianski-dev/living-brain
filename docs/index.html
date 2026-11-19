@@ -61,6 +61,10 @@ code,.mono{font-family:"JetBrains Mono",monospace;font-size:.86em}
 .btn.primary{background:var(--ink);color:var(--paper)}
 .btn.ghost{color:var(--ink)}
 .btn:hover{transform:translateY(-1px)}
+.stats{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:baseline;margin:26px 0 0;font-size:.95rem;color:var(--muted)}
+.stats[hidden]{display:none}
+.stats b{font:700 1.35rem "Bricolage Grotesque",sans-serif;color:var(--ink);margin-right:4px;font-variant-numeric:tabular-nums}
+.stats a{font-size:.9rem}
 
 /* index cards */
 .drawer{position:relative;height:360px}
@@ -220,6 +224,11 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
       <h1>A documentação decide. O código executa.</h1>
       <p class="lead">Living Brain é um método para escrever a documentação antes do código e conferir cada página nova com o que o produto já decidiu. Na prática, você pede em linguagem natural e o Claude Code registra no lugar certo, no formato certo.</p>
       <div class="ctas"><a class="btn primary" href="#instalar">Instalar em 2 comandos</a><a class="btn ghost" href="#demo">Ver como funciona</a></div>
+      <p class="stats" id="stats" hidden>
+        <span><b id="stat-clones"></b>clones do repositório desde <span id="stat-since"></span></span>
+        <span><b id="stat-unique"></b>origens diferentes nos últimos 14 dias</span>
+        <a href="#numeros" id="stat-link">O que esses números contam</a>
+      </p>
     </div>
     <div class="drawer" aria-hidden="true">
       <div class="icard"><span class="tab">FEAT-</span><div class="t">Onboarding de pacientes</div><div class="rule"></div><div class="rule"></div><span class="hole"></span></div>
@@ -490,6 +499,9 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
       <p>Não. Documentar antes é uma disciplina do time. O que ele garante é que cada documento novo seja conferido com o que já está registrado.</p></details>
     <details><summary>Quanto custa?</summary>
       <p>O plugin é gratuito e de código aberto, sob a licença MIT. O uso do Claude Code segue o seu plano do Claude.</p></details>
+    <details id="numeros"><summary>O que os números de clones no topo da página contam?</summary>
+      <p>Quando alguém adiciona o marketplace do Living Brain, o Claude Code clona este repositório, e o GitHub registra esse clone. Por isso o número de clones é o sinal público mais próximo de uma instalação. Mas ele não é uma contagem de instalações: também entram atualizações do plugin, clones de quem só quis ler o código, automações e as sessões do próprio autor. "Origens diferentes" é a contagem de clonadores únicos que o GitHub faz numa janela de 14 dias.</p>
+      <p>O GitHub só guarda esses dados por 14 dias, então uma automação salva os números uma vez por dia. Os dados brutos são públicos, no arquivo <a href="https://github.com/davidcromianski-dev/living-brain/blob/traffic-data/traffic.json">traffic.json</a>.</p></details>
     <details><summary>Preciso instalar mais alguma coisa?</summary>
       <p>Não. Opcionalmente, o plugin <a href="https://github.com/obra/superpowers">superpowers</a> permite que ele delegue documentos longos a subagentes, para não lotar a conversa principal. O Living Brain funciona sem ele.</p></details>
   </div></div>
@@ -588,6 +600,22 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
     clone.querySelectorAll(".copy").forEach(function(x){ x.remove(); });
     copyText(clone.textContent.trim()).then(function(){ say("Copiado"); }, function(){ say("Não foi possível copiar. Selecione o texto e copie manualmente."); });
   });
+
+  // repository traffic, saved daily by .github/workflows/traffic-stats.yml; the line stays hidden if it cannot load
+  var STATS_URL = "https://raw.githubusercontent.com/davidcromianski-dev/living-brain/traffic-data/traffic.json";
+  if (window.fetch) {
+    fetch(STATS_URL).then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }).then(function(data){
+      var s = data.summary, recent = s && (s.last_14_days || data.snapshots[data.snapshots.length - 1]);
+      if (!s || !s.since || !recent || typeof s.clones !== "number" || typeof recent.unique_cloners !== "number") return;
+      var num = new Intl.NumberFormat("pt-BR");
+      var since = new Date(s.since + "T00:00:00Z").toLocaleDateString("pt-BR", {day:"numeric", month:"long", year:"numeric", timeZone:"UTC"});
+      document.getElementById("stat-clones").textContent = num.format(s.clones);
+      document.getElementById("stat-since").textContent = since;
+      document.getElementById("stat-unique").textContent = num.format(recent.unique_cloners);
+      document.getElementById("stats").hidden = false;
+    }).catch(function(){});
+  }
+  document.getElementById("stat-link").addEventListener("click", function(){ document.getElementById("numeros").open = true; });
 })();
 </script>
 </body>
