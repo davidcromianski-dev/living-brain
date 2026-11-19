@@ -448,7 +448,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
 
 
 /* one section per gesture (desktop): each section fills the screen; the hero shares its screen with the marquee */
-html.gesture{scroll-behavior:auto}
+html.gesture{scroll-behavior:auto;scrollbar-width:none}
+html.gesture::-webkit-scrollbar{display:none}
 html.gesture .hero{min-height:calc(100svh - var(--mqh,63px));display:grid;grid-template-columns:minmax(0,1fr);align-content:center;padding-block:76px 8px}
 html.gesture main>.sec{min-height:100svh;display:grid;grid-template-columns:minmax(0,1fr);align-content:center;padding-block:96px 72px}
 html.gesture h1{font-size:clamp(2.4rem,5.4vw,4.2rem);margin-top:16px}
