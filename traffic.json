@@ -1,17 +1,17 @@
 {
   "repository": "davidcromianski-dev/living-brain",
-  "updated_at": "2026-11-23T18:19:48.128Z",
+  "updated_at": "2026-11-24T17:52:37.699Z",
   "summary": {
     "since": "2026-11-05",
-    "clones": 386,
-    "views": 68,
+    "clones": 391,
+    "views": 71,
     "stars": 3,
     "forks": 0,
     "last_14_days": {
-      "clones": 386,
-      "unique_cloners": 153,
-      "views": 68,
-      "unique_visitors": 4
+      "clones": 391,
+      "unique_cloners": 155,
+      "views": 71,
+      "unique_visitors": 6
     }
   },
   "daily": {
@@ -122,6 +122,12 @@
       "unique_cloners": 17,
       "views": 0,
       "unique_visitors": 0
+    },
+    "2026-11-23": {
+      "clones": 5,
+      "unique_cloners": 3,
+      "views": 3,
+      "unique_visitors": 3
     }
   },
   "snapshots": [
@@ -172,6 +178,16 @@
       "unique_cloners": 153,
       "views": 68,
       "unique_visitors": 4,
+      "stars": 3,
+      "forks": 0
+    },
+    {
+      "date": "2026-11-24",
+      "window_days": 14,
+      "clones": 391,
+      "unique_cloners": 155,
+      "views": 71,
+      "unique_visitors": 6,
       "stars": 3,
       "forks": 0
     }
